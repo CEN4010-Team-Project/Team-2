@@ -1,4 +1,4 @@
-package com.bookstore.controller;
+package com.geektext.controller;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bookstore.domain.User;
-import com.bookstore.domain.security.PasswordResetToken;
-import com.bookstore.domain.security.Role;
-import com.bookstore.domain.security.UserRole;
-import com.bookstore.service.UserService;
-import com.bookstore.service.impl.UserSecurityService;
-import com.bookstore.utility.MailConstructor;
-import com.bookstore.utility.SecurityUtility;
+import com.geektext.domain.User;
+import com.geektext.domain.security.PasswordResetToken;
+import com.geektext.domain.security.Role;
+import com.geektext.domain.security.UserRole;
+import com.geektext.service.UserService;
+import com.geektext.service.impl.UserSecurityService;
+import com.geektext.utility.MailConstructor;
+import com.geektext.utility.SecurityUtility;
 
 @Controller
 public class HomeController {

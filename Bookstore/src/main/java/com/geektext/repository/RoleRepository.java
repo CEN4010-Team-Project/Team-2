@@ -1,8 +1,8 @@
-package com.bookstore.repository;
+package com.geektext.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.bookstore.domain.security.Role;
+import com.geektext.domain.security.Role;
 
 public interface RoleRepository extends CrudRepository<Role, Long> {
 	Role findByname(String name);

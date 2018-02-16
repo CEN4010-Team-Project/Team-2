@@ -1,4 +1,4 @@
-package com.bookstore.domain;
+package com.geektext.domain;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -16,9 +16,9 @@ import javax.persistence.OneToMany;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.bookstore.domain.security.Authority;
-import com.bookstore.domain.security.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.geektext.domain.security.Authority;
+import com.geektext.domain.security.UserRole;
 
 @Entity
 public class User implements UserDetails{

@@ -1,10 +1,10 @@
-package com.bookstore.service;
+package com.geektext.service;
 
 import java.util.Set;
 
-import com.bookstore.domain.User;
-import com.bookstore.domain.security.PasswordResetToken;
-import com.bookstore.domain.security.UserRole;
+import com.geektext.domain.User;
+import com.geektext.domain.security.PasswordResetToken;
+import com.geektext.domain.security.UserRole;
 
 public interface UserService {
 	PasswordResetToken getPasswordResetToken(final String token);

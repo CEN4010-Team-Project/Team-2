@@ -1,4 +1,4 @@
-package com.bookstore.service.impl;
+package com.geektext.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.bookstore.domain.User;
-import com.bookstore.repository.UserRepository;
+import com.geektext.domain.User;
+import com.geektext.repository.UserRepository;
 
 @Service
 public class UserSecurityService implements UserDetailsService{

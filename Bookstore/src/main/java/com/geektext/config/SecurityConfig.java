@@ -1,4 +1,4 @@
-package com.bookstore.config;
+package com.geektext.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -11,8 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.bookstore.service.impl.UserSecurityService;
-import com.bookstore.utility.SecurityUtility;
+import com.geektext.service.impl.UserSecurityService;
+import com.geektext.utility.SecurityUtility;
 
 @Configuration
 @EnableWebSecurity
