@@ -54,7 +54,6 @@
             <ol class="carousel-indicators">
                 <li data-target="#featured-books" data-slide-to="0" class="active"></li>
                 <li data-target="#featured-books" data-slide-to="1"></li>
-                <li data-target="#featured-books" data-slide-to="2"></li>
             </ol>
 
             <!-- Wrapper for slides -->
@@ -64,47 +63,36 @@
                     <div class="carousel-caption">
                         <div class="row">
                             <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
+
+                                <a th:href="@{/bookDetail?id=}+'1'">
+                                    <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                         th:src="#{adminPath}+@{/image/book/}+'1.png'"/></a>
+
                             </div>
                             <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
+                                <a th:href="@{/bookDetail?id=}+'2'">
+                                    <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                         th:src="#{adminPath}+@{/image/book/}+'2.png'"/></a>
                             </div>
                             <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
+                                <a th:href="@{/bookDetail?id=}+'3'">
+                                    <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                         th:src="#{adminPath}+@{/image/book/}+'3.png'"/></a>
                             </div>
                             <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
+                                <a th:href="@{/bookDetail?id=}+'6'">
+                                    <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                         th:src="#{adminPath}+@{/image/book/}+'6.png'"/></a>
                             </div>
                             <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
+                                <a th:href="@{/bookDetail?id=}+'7'">
+                                    <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                         th:src="#{adminPath}+@{/image/book/}+'7.png'"/></a>
                             </div>
                             <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="/image/shelf.png" class="img-responsive"/>
-                    <div class="carousel-caption">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
-                            </div>
-                            <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
-                            </div>
-                            <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
-                            </div>
-                            <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
-                            </div>
-                            <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
-                            </div>
-                            <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
+                                <a th:href="@{/bookDetail?id=}+'8'">
+                                    <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                         th:src="#{adminPath}+@{/image/book/}+'8.png'"/></a>
                             </div>
                         </div>
                     </div>
@@ -114,22 +102,34 @@
                     <div class="carousel-caption">
                         <div class="row">
                             <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
+                                <a th:href="@{/bookDetail?id=}+'9'">
+                                    <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                         th:src="#{adminPath}+@{/image/book/}+'9.png'"/></a>
                             </div>
                             <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
+                                <a th:href="@{/bookDetail?id=}+'11'">
+                                    <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                         th:src="#{adminPath}+@{/image/book/}+'11.png'"/></a>
                             </div>
                             <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
+                                <a th:href="@{/bookDetail?id=}+'12'">
+                                    <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                         th:src="#{adminPath}+@{/image/book/}+'12.png'"/></a>
                             </div>
                             <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
+                                <a th:href="@{/bookDetail?id=}+'13'">
+                                    <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                         th:src="#{adminPath}+@{/image/book/}+'13.png'"/></a>
                             </div>
                             <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
+                                <a th:href="@{/bookDetail?id=}+'14'">
+                                    <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                         th:src="#{adminPath}+@{/image/book/}+'14.png'"/></a>
                             </div>
                             <div class="col-xs-2">
-                                <img class="img-responsive" src="/image/book1.png"/>
+                                <a th:href="@{/bookDetail?id=}+'15'">
+                                    <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                         th:src="#{adminPath}+@{/image/book/}+'15.png'"/></a>
                             </div>
                         </div>
                     </div>

@@ -36,17 +36,19 @@
 					<a th:href="@{/searchByCategory(category='Arts &amp; Literature')}" th:classappend="${activeArtsLiterature}? 'active'" class="list-group-item">Arts &amp; Literature</a>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-9">
 				<div th:if="${emptyList}">
-					<h5 style="font-style: italic;">Oops, no result is found. Try
-						something else or try again later.</h5>
+					<h4 style="font-style: italic;">Oops, no result was found. Try
+						something else or try again later.</h4>
 				</div>
 
 				<table border="0" id="bookList">
 					<thead>
 						<tr>
-							<th></th>
+							<th>
+								<span class="col-xs-offset-10">Sort by Alphabetical Order</span>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -55,7 +57,7 @@
 								<div th:if="${book != null}">
 									<div class="row" style="margin-bottom: 50px;">
 										<div class="col-xs-3">
-											<a th:href="@{/bookDetail?id=}+${book.id}"><img 
+											<a th:href="@{/bookDetail?id=}+${book.id}"><img
 												class="img-responsive shelf-book"
 												th:src="#{adminPath}+@{/image/book/}+${book.id}+'.png'" /></a>
 										</div>
@@ -90,15 +92,15 @@
 <div th:replace="common/header :: footer"/>
 
 	<div th:replace="common/header :: body-bottom-scripts" />
-	
+
 	<script>
 		$(document).ready(function() {
 			$('#bookList').DataTable({
 				"lengthMenu":[[5,10,15,20,-1],[5,10,15,20,"All"]],
-				"ordering":false,
+				"ordering":true,
 				stateSave:true
 			});
-			
+
 			$("#bookList").on('page.dt', function() {
 				$('html, body').animate({
 					scrollTop: $('#bookList').offset().top
