@@ -37,6 +37,7 @@ public class Book {
 	@Column(columnDefinition="text")
 	private String description;
 	private int inStockNumber;
+	private String authorBio;
 
 	@Transient
 	private MultipartFile bookImage;
@@ -166,6 +167,14 @@ public class Book {
 		this.description = description;
 	}
 
+  public String getAuthorBio() {
+    return authorBio;
+  }
+
+  public void setAuthorBio(String authorBio) {
+    this.authorBio = authorBio;
+  }
+
 	public int getInStockNumber() {
 		return inStockNumber;
 	}
@@ -189,6 +198,5 @@ public class Book {
 	public void setBookToCartItemList(List<BookToCartItem> bookToCartItemList) {
 		this.bookToCartItemList = bookToCartItemList;
 	}
-
 
 }

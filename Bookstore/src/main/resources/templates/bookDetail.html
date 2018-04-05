@@ -10,7 +10,7 @@
         <div class="col-xs-8">
             <h2 class="section-headline">
                 <h2 class="section-headline">
-                    <span th:text="${user}? ${#strings.toUpperCase(user.username)} : 'All Books'"></span>
+                    <span th:text="${user}? ${#strings.toUpperCase(user.username)} : ' Book Details '"></span>
                 </h2>
             </h2>
         </div>
@@ -96,7 +96,8 @@
                 </div>
 
                 <hr/>
-                <p th:utext="${book.description}"></p>
+                <p><Strong>Description: </Strong><span th:utext="${book.description}"></span></p>
+                <p><Strong>Author Bio: </Strong><span th:utext="${book.authorBio}"></span></p>
             </div>
         </div>
     </form>
