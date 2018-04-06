@@ -32,16 +32,14 @@
                     your cart is empty. See if you can find what you like in the
                     bookshelf and add them to cart.
                 </div>
-
-                <div class="col-xs-6 text-left">
-                    <a class="btn btn-warning" th:href="@{/bookshelf}">Continue
+                <div class="text-right">
+                    <a class="btn btn-lg btn-info" th:href="@{/bookshelf}">Continue
                         Shopping</a>
-                </div>
-                <div class="col-xs-6 text-right">
-                    <a th:if="${not #lists.isEmpty(cartItemList)}" class="btn btn-primary"
-                       th:href="@{/checkout(id=${shoppingCart.id})}">Check Out</a>
-                </div>
 
+                    <a th:if="${not #lists.isEmpty(cartItemList)}" class="btn btn-lg btn-primary"
+                       th:href="@{/checkout(id=${shoppingCart.id})}">Check Out</a>
+
+                </div>
                 <br/> <br/>
                 <div class="row" th:if="${not #lists.isEmpty(cartItemList)}">
                     <div class="col-xs-8 ">
@@ -72,11 +70,9 @@
                             <div style="margin-left:50px;">
                                 <a th:href="@{/bookDetail?id=}+${cartItem.book.id}"><h4
                                         th:text="${cartItem.book.title}"></h4></a>
-                                <p th:if="${cartItem.book.inStockNumber&gt;10}"
-                                   style="color: green;">In Stock</p>
-                                <p
-                                        th:if="${cartItem.book.inStockNumber&lt;10 and cartItem.book.inStockNumber&gt;0}"
-                                        style="color: green;">
+
+                                <p th:if="${cartItem.book.inStockNumber&gt;0}"
+                                   style="color: green;">
                                     Only <span th:text="${cartItem.book.inStockNumber}"></span> In
                                     Stock
                                 </p>
