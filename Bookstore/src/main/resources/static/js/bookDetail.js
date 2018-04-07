@@ -22,7 +22,9 @@ available = itemsInStock - carQty;
 and enable/disable Add to Cart button*/
 
 if (Q_itemsInStock) {
-    Q_warningQty.disabled = !(available < 0);
+    if (Q_warningQty) {
+        Q_warningQty.disabled = !(available < 0);
+    }
     Q_itemsInStock.textContent = (available < 0) ? 0 : available;
 }
 
@@ -34,9 +36,21 @@ Q_qty.change(function () {
 addToCartButton(available, qty);
 
 /* List of books by */
-clickNHide(Q_authorName, Q_description);
-clickNShow(Q_authorName, Q_otherBooks)
+if (Q_authorName && Q_description && Q_otherBooks) {
+    clickNHide(Q_authorName, Q_description);
+    clickNShow(Q_authorName, Q_otherBooks)
+}
+if ($('#myTabs a')) {
+    $('#myTabs a:first').tab('show') // Select first tab
+    $('#myTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
 
+    Q_authorName.click(function () {
+        $('#author-tab').trigger('click');
+    })
+}
 
 //function definitions
 function addToCartButton(available, qty) {

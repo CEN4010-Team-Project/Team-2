@@ -38,3 +38,17 @@ $(document).ready(function () {
     $("#txtConfirmPassword").keyup(checkPasswordMatch);
     $("#txtNewPassword").keyup(checkPasswordMatch);
 });
+
+$(document).ready(function () {
+    $('#bookList').DataTable({
+        "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
+        "ordering": true,
+        stateSave: true
+    });
+
+    $("#bookList").on('page.dt', function () {
+        $('html, body').animate({
+            scrollTop: $('#bookList').offset().top
+        }, 200);
+    });
+});

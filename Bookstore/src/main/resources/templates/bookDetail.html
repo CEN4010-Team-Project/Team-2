@@ -159,18 +159,71 @@
                      style="padding-left:0; padding-top:8px;">
                     <a href="#">Rate &amp; Comment</a>
                 </div>
-                <div class="col-xs-12" style="padding-left: 0;">
-                    <hr/>
-                    <span id="Description"><Strong>Description: </Strong><span
-                            th:utext="${book.description}"></span>
-                    </span>
-                    <p><Strong>Author Bio: </Strong><span th:utext="${book.authorBio}"></span></p>
-                    <span id="OtherBooks" style="display: none;"><Strong>Other books by <em> <span
-                            th:utext="${book.author}"></span></em>:
-                    </Strong></span>
+                <br/>
+                <br/>
+                <div class="row col-xs-12">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="details-tab" data-toggle="tab"
+                               href="#Description"
+                               role="tab" aria-controls="Description"
+                               aria-selected="true">Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="author-tab" data-toggle="tab"
+                               href="#AuthorInfo"
+                               role="tab" aria-controls="AuthorInfo"
+                               aria-selected="false">Author</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="reviews-tab" data-toggle="tab"
+                               href="#Reviews"
+                               role="tab" aria-controls="Reviews" aria-selected="false">Reviews</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent" style="padding-left:3%">
+                        <br/>
 
+                        <div class="tab-pane fade active in" id="Description" role="tabpanel"
+                             aria-labelledby="details-tab">
+                            <div class="row">
+                                <p><Strong>Description: </Strong></p>
+                                <span th:utext="${book.description}"></span>
+                            </div>
+                        </div>
 
-                    <hr/>
+                        <div class="tab-pane fade" id="AuthorInfo" role="tabpanel"
+                             aria-labelledby="author-tab">
+                            <div class="row">
+                                <p><Strong>Author Bio: </Strong><span
+                                        th:utext="${book.authorBio}"></span>
+                                </p>
+                                <span id="OtherBooks"><Strong>Other books by <em> <span
+                                        th:utext="${book.author}"></span></em>:</Strong></span>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div>
+                                    <div class="col-xs-3" th:each="item : ${bookList}"
+                                         th:if="*{#strings.equalsIgnoreCase(book.author, item.author) and book.id!=item.id }">
+                                        <a th:href="@{/bookDetail?id=}+${item.id}">
+                                            <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                                 th:src="#{adminPath}+@{/image/book/}+${item.id}+'.png'"/></a>
+                                        <a th:href="@{/bookDetail?id=}+${item.id}">
+                                            <label th:text="${item.title}"></label></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="Reviews" role="tabpanel"
+                             aria-labelledby="reviews-tab">
+                            <div class="row">
+                                <span>...</span>
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
                 </div>
             </div>
         </div>
