@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
 public class HomeController {
@@ -101,6 +102,8 @@ public class HomeController {
   ) {
 
     if(principal != null) {
+
+      AtomicBoolean bookOwned = new AtomicBoolean(false);
       String username = principal.getName();
       User user = userService.findByUsername(username);
 
@@ -108,6 +111,13 @@ public class HomeController {
 
       model.addAttribute("cartItemList", cartItemList);
       model.addAttribute("user", user);
+
+      user.getOrderList().forEach(order -> order.getCartItemList().forEach(cartItem -> {
+        if(cartItem.getBook().getId() == id) {
+          bookOwned.set(true);
+        }
+      }));
+      model.addAttribute("bookOwned", bookOwned.get());
     }
 
     Book book = bookService.findOne(id);
@@ -115,6 +125,9 @@ public class HomeController {
 
     List<Book> bookList = bookService.findAll();
     model.addAttribute("bookList", bookList);
+
+    List<Book> bookListByAuthor = bookService.findByAuthor(book.getAuthor());
+    model.addAttribute("bookListByAuthor", bookListByAuthor);
 
     List<Integer> qtyList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 

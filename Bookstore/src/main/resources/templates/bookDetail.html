@@ -24,7 +24,7 @@
         <input hidden="hidden" th:field="*{book.id}"/>
         <div class="row" style="margin-top: 120px;">
             <div class="col-xs-3">
-                <a th:href="@{/bookshelf}">Back to book list</a><br/>
+                <a id="BackToBookList" th:href="@{/bookshelf}">Back to book list</a><br/>
                 <img id="myImg" th:alt="*{book.title}+' by '+*{book.author} " HEIGHT="400"
                      WIDTH="250" class="img-responsive shelf-book"
                      th:src="#{adminPath}+@{/image/book/}+${book.id}+'.png'"/>
@@ -49,7 +49,7 @@
                 </h3>
                 <h3><span th:if="${notEnoughStock}" style="color: red">Oops, only<span
                         th:text="${book.inStockNumber}"></span>item(s) in Stock.</span></h3>
-                <h3 th:text="${book.title}">Book Title</h3>
+                <h3 id="BookTitle" th:text="${book.title}">Book Title</h3>
                 <div class="row">
                     <div class="col-xs-5">
                         <p><strong>Author: </strong><a id="AuthorName" href="#"
@@ -123,7 +123,7 @@
                     </div>
                 </div>
                 <div class="col-xs-3" style="padding-left: 0; padding-right: 0;">
-                    <fieldset disabled="true" class="rating">
+                    <fieldset id="RatingStars" class="rating">
                         <input type="radio" id="star5" name="rating" value="5"/><label
                             class="full" for="star5" title="Awesome - 5 stars"></label>
                         <input type="radio" id="star4half" name="rating"
@@ -153,13 +153,37 @@
                     </fieldset>
                 </div>
                 <div class="col-xs-2" style="padding-top:8px;">
-                    <span id="numOfRatings">0 Reviews</span>
+                    <span>
+                    <span id="numOfRatings">0 </span>Reviews</span>
                 </div>
-                <div th:if="${user}" class="col-xs-7 text-left"
-                     style="padding-left:0; padding-top:8px;">
-                    <a href="#">Rate &amp; Comment</a>
-                </div>
-                <br/>
+                <spam id="RateCommentArea" th:if="${user} and ${bookOwned}">
+                    <div class="col-xs-7 text-left"
+                         style="padding-left:0; padding-top:8px;">
+                        <a id="RateCommentLink" data-toggle="collapse" href="#Comments"
+                           aria-expanded="false"
+                           aria-controls="Comments">Rate &amp; Comment</a>
+                    </div>
+                    <br/>
+                    <div id="Comments" class="collapse">
+                        <form>
+                            <div class="form-group">
+                            <textarea class="form-control" rows="3" id="comment"
+                                      maxlength="200"
+                                      placeholder="Choose a rating above and add a comment within 200 characters"></textarea>
+
+                            </div>
+                            <input style="width:20%;" class="btn btn-sm btn-success" type="submit"
+                                   value="Submit Comment"/>
+
+                            <input style="margin-left:2%;" type="checkbox" class="form-check-input"
+                                   id="anonymous"/>
+                            <label class="form-check-label" for="anonymous">
+                                Make this an Anonymous Comment</label>
+
+                        </form>
+                        <br/>
+                    </div>
+                </spam>
                 <br/>
                 <div class="row col-xs-12">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -198,20 +222,22 @@
                                 <p><Strong>Author Bio: </Strong><span
                                         th:utext="${book.authorBio}"></span>
                                 </p>
-                                <span id="OtherBooks"><Strong>Other books by <em> <span
-                                        th:utext="${book.author}"></span></em>:</Strong></span>
+                                <span th:if="${#lists.size(bookListByAuthor)&gt; 1}"
+                                      id="OtherBooks"><Strong>Other books by <em> <span
+                                        th:utext="${book.author}"></span></em>:  </Strong></span>
+                                <span th:unless="${ #lists.size(bookListByAuthor) &gt; 1}"
+                                > <br/><Strong>... Sorry, there are no other books by <em> <span
+                                        th:utext="${book.author}"></span></em> available </Strong></span>
                             </div>
                             <br/>
                             <div class="row">
-                                <div>
-                                    <div class="col-xs-3" th:each="item : ${bookList}"
-                                         th:if="*{#strings.equalsIgnoreCase(book.author, item.author) and book.id!=item.id }">
-                                        <a th:href="@{/bookDetail?id=}+${item.id}">
-                                            <img HEIGHT="250" WIDTH="150" class="img-responsive"
-                                                 th:src="#{adminPath}+@{/image/book/}+${item.id}+'.png'"/></a>
-                                        <a th:href="@{/bookDetail?id=}+${item.id}">
-                                            <label th:text="${item.title}"></label></a>
-                                    </div>
+                                <div class="col-xs-3" th:each="item : ${bookListByAuthor}"
+                                     th:if="*{book.id!=item.id }">
+                                    <a th:href="@{/bookDetail?id=}+${item.id}">
+                                        <img HEIGHT="250" WIDTH="150" class="img-responsive"
+                                             th:src="#{adminPath}+@{/image/book/}+${item.id}+'.png'"/></a>
+                                    <a th:href="@{/bookDetail?id=}+${item.id}">
+                                        <label th:text="${item.title}"></label></a>
                                 </div>
                             </div>
                         </div>

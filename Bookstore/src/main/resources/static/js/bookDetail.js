@@ -4,10 +4,12 @@ var Q_itemsInStock = $("#InStockOnly").get(0);
 var Q_qty = $("#Qty");
 var Q_carQty = $("#CartQty").get(0);
 var Q_addToCart = $("#AddToCart").get(0);
-var Q_description = $("#Description");
-var Q_otherBooks = $("#OtherBooks");
 var Q_warningQty = $("#QtyWarning").get(0);
 var Q_authorName = $("#AuthorName");
+var Q_rateLink = $("#RateCommentArea");
+var Q_ratingStars = $("#RatingStars");
+
+//var Q_rateCommentAttr = $("#RateCommentLink[aria-expanded]").val($("#RateCommentLink[aria-expanded]").attr("aria-expanded")).get(0);
 
 //regular vars with initialization
 var itemsInStock = (Q_itemsInStock) ? parseInt("" + Q_itemsInStock.textContent) : 0;
@@ -28,28 +30,36 @@ if (Q_itemsInStock) {
     Q_itemsInStock.textContent = (available < 0) ? 0 : available;
 }
 
-Q_qty.change(function () {
-    qty = Q_qty.get(0).value;
+if (Q_addToCart && Q_qty) {
+    Q_qty.change(function () {
+        qty = Q_qty.get(0).value;
+        addToCartButton(available, qty);
+    });
+
     addToCartButton(available, qty);
-});
-
-addToCartButton(available, qty);
-
-/* List of books by */
-if (Q_authorName && Q_description && Q_otherBooks) {
-    clickNHide(Q_authorName, Q_description);
-    clickNShow(Q_authorName, Q_otherBooks)
 }
+
+
+/* navigate through different tabs*/
 if ($('#myTabs a')) {
     $('#myTabs a:first').tab('show') // Select first tab
     $('#myTabs a').click(function (e) {
         e.preventDefault()
-        $(this).tab('show')
+        $(this).tab('show')git
     });
+    if (Q_authorName) {
+        clickThenClick(Q_authorName, $('#author-tab'), Q_ratingStars.get(0));
+    }
+}
 
-    Q_authorName.click(function () {
-        $('#author-tab').trigger('click');
-    })
+
+//Enable the star rating system
+if (Q_ratingStars.get(0)) {
+    if (Q_rateLink.get(0)) {
+        Q_ratingStars.get(0).disabled = false;
+    } else {
+        Q_ratingStars.get(0).disabled = true;
+    }
 }
 
 //function definitions
@@ -63,9 +73,28 @@ function clickNHide(queryClicked, queryHidden) {
     });
 }
 
-function clickNShow(queryClicked, queryShown) {
+function clickNShow(queryClicked, queryShown, pov) {
     queryClicked.click(function () {
         queryShown.show();
+        queryShown.each(function () {
+            $('html, body').animate({
+                scrollTop: $(pov).offset().top
+            }, 400);
+        });
+
     });
 }
+
+function clickThenClick(fakeClick, reallyClick, pov) {
+    fakeClick.click(function () {
+        reallyClick.trigger('click');
+
+        reallyClick.each(function () {
+            $('html, body').animate({
+                scrollTop: $(pov).offset().top
+            }, 400);
+        });
+    });
+}
+
 
