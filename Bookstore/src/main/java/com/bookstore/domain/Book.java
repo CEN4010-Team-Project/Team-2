@@ -21,6 +21,8 @@ public class Book {
   private int numberOfPages;
   private String format;
   private String isbn;
+  private double rating;
+
   private double shippingWeight;
   private double listPrice;
   private double ourPrice;
@@ -29,6 +31,7 @@ public class Book {
   @Column(columnDefinition = "text")
   private String description;
   private int inStockNumber;
+  private int soldNumber;
   private String authorBio;
 
   @Transient
@@ -59,6 +62,22 @@ public class Book {
 
   public String getAuthor() {
     return author;
+  }
+
+  public double getRating() {
+    return rating;
+  }
+
+  public void setRating(double rating) {
+    this.rating = rating;
+  }
+
+  public int getSoldNumber() {
+    return soldNumber;
+  }
+
+  public void setSoldNumber(int soldNumber) {
+    this.soldNumber = soldNumber;
   }
 
   public void setAuthor(String author) {

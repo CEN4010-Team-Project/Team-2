@@ -142,6 +142,9 @@ public class HomeController {
     List<Review> reviewList = reviewService.findByBook(book);
     model.addAttribute("reviewList", reviewList);
 
+    double ratingsAvg = reviewList.stream().mapToDouble(Review::getStars).sum() / reviewList.size();
+
+    book.setRating(ratingsAvg);
 
     return "bookDetail";
   }
@@ -692,9 +695,12 @@ public class HomeController {
 
     Review review = new Review();
 
-    List<Review> reviewList = book.getReviewList();
-    if(reviewList.retainAll(user.getReviewList())) {
-      review = reviewService.findByBookAndUser(book, user);
+    List<Review> reviewListByBook = book.getReviewList();
+    List<Review> reviewListByUser = user.getReviewList();
+    List<Review> reviewList = reviewListByBook;
+    reviewList.retainAll(reviewListByUser);
+    if(!reviewList.isEmpty()) {
+      review = reviewList.get(0);
       review.setBook(book);
       review.setUser(user);
       review.setStars(Double.parseDouble(stars));
@@ -711,6 +717,7 @@ public class HomeController {
       review.setReviewDate(java.sql.Date.valueOf(LocalDate.now()));
       reviewService.save(review);
     }
+
 
     reviewList.forEach(r -> {
       if(r.getUser().getId() == user.getId()) {
@@ -718,21 +725,10 @@ public class HomeController {
       }
     });
 
-    List<Review> reviewListUser = user.getReviewList();
-    Book finalBook = book;
-    reviewListUser.forEach(r -> {
-      if(r.getBook().getId() == finalBook.getId()) {
-        userHadReview.set(true);
-      }
-    });
+    double ratingsAvg =
+        reviewListByBook.stream().mapToDouble(Review::getStars).sum() / reviewList.size();
 
-    if(!(bookHadReview.get() && userHadReview.get())) {
-      reviewService.save(review);
-    } else {
-
-      reviewService.updateReview(review);
-    }
-
+    book.setRating(ratingsAvg);
 
     return "forward:/bookDetail?id=" + book.getId();
   }

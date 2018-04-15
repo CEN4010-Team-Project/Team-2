@@ -128,41 +128,84 @@
             <form th:action="@{/setReview}" method="post">
                 <div class="col-xs-3" style="padding-left: 0; padding-right: 0;">
                     <fieldset id="RatingStars" class="rating">
-                        <input type="radio" id="star5" th:name="stars" value="5"/><label
-                            class="full" for="star5" title="Awesome - 5 stars"></label>
-                        <input type="radio" id="star4half" th:name="stars"
-                               value="4.5"/><label class="half" for="star4half"
-                                                   title="Pretty good - 4.5 stars"></label>
-                        <input type="radio" id="star4" th:name="stars" value="4"/><label
-                            class="full" for="star4" title="Pretty good - 4 stars"></label>
-                        <input type="radio" id="star3half" th:name="stars"
-                               value="3.5"/><label class="half" for="star3half"
-                                                   title="Meh - 3.5 stars"></label>
-                        <input type="radio" id="star3" th:name="stars" value="3"/><label
-                            class="full" for="star3" title="Meh - 3 stars"></label>
-                        <input type="radio" id="star2half" th:name="stars"
-                               value="2.5"/><label class="half" for="star2half"
-                                                   title="Kinda bad - 2.5 stars"></label>
-                        <input type="radio" id="star2" th:name="stars" value="2"/><label
-                            class="full" for="star2" title="Kinda bad - 2 stars"></label>
-                        <input type="radio" id="star1half" th:name="stars"
-                               value="1.5"/><label class="half" for="star1half"
-                                                   title="Meh - 1.5 stars"></label>
-                        <input type="radio" id="star1" th:name="stars" value="1"/><label
-                            class="full" for="star1"
-                            title="Sucks big time - 1 star"></label>
-                        <input type="radio" id="starhalf" th:name="stars" value="0.5"/><label
-                            class="half" for="starhalf"
-                            title="Sucks big time - 0.5 stars"></label>
-                        <input checked="checked" hidden="hidden" type="radio" id="starhalf"
+                        <input th:unless="*{book.getRating()&lt;4.8}" checked="checked" type="radio"
+                               id="star5"
+                               th:name="stars" value="5"/>
+                        <input th:if="*{book.getRating()&lt;4.8}" type="radio" id="star5"
+                               th:name="stars" value="5"/>
+                        <label class="full" for="star5" title="Awesome - 5 stars"></label>
+                        <input th:if="*{book.getRating()&lt;4.8 and not(book.getRating()&lt;4.2)}"
+                               checked="checked" type="radio"
+                               id="star4half" th:name="stars" value="4.5"/>
+                        <input th:unless="*{book.getRating()&lt;4.8 and not(book.getRating()&lt;4.2)}"
+                               type="radio" id="star4half" th:name="stars" value="4.5"/>
+                        <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+                        <input th:if="*{book.getRating()&lt;4.2 and not(book.getRating()&lt;3.8)}"
+                               checked="checked" type="radio" id="star4" th:name="stars" value="4"/>
+                        <input th:unless="*{book.getRating()&lt;4.2 and not(book.getRating()&lt;3.8)}"
+                               type="radio" id="star4" th:name="stars" value="4"/>
+                        <label class="full" for="star4" title="Pretty good - 4 stars"></label>
+                        <input th:if="*{book.getRating()&lt;3.8 and not(book.getRating()&lt;3.2)}"
+                               checked="checked" type="radio" id="star3half" th:name="stars"
+                               value="3.5"/>
+                        <input th:unless="*{book.getRating()&lt;3.8 and not(book.getRating()&lt;3.2)}"
+                               type="radio" id="star3half" th:name="stars" value="3.5"/>
+                        <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+                        <input th:if="*{book.getRating()&lt;3.2 and not(book.getRating()&lt;2.8)}"
+                               checked="checked" type="radio" id="star3" th:name="stars" value="3"/>
+                        <input th:unless="*{book.getRating()&lt;3.2 and not(book.getRating()&lt;2.8)}"
+                               type="radio" id="star3" th:name="stars" value="3"/>
+                        <label class="full" for="star3" title="Meh - 3 stars"></label>
+                        <input th:if="*{book.getRating()&lt;2.8 and not(book.getRating()&lt;2.2)}"
+                               checked="checked" type="radio" id="star2half" th:name="stars"
+                               value="2.5"/>
+                        <input th:if="*{book.getRating()&lt;2.8 and not(book.getRating()&lt;2.2)}"
+                               type="radio" id="star2half" th:name="stars" value="2.5"/>
+                        <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+                        <input th:if="*{book.getRating()&lt;2.2 and not(book.getRating()&lt;1.8)}"
+                               checked="checked" type="radio" id="star2" th:name="stars" value="2"/>
+                        <input th:unless="*{book.getRating()&lt;2.2 and not(book.getRating()&lt;1.8)}"
+                               type="radio" id="star2" th:name="stars" value="2"/>
+                        <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+                        <input th:if="*{book.getRating()&lt;1.8 and not(book.getRating()&lt;1.2)}"
+                               checked="checked" type="radio" id="star1half" th:name="stars"
+                               value="1.5"/>
+                        <input th:unless="*{book.getRating()&lt;1.8 and not(book.getRating()&lt;1.2)}"
+                               type="radio" id="star1half" th:name="stars" value="1.5"/>
+                        <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+                        <input th:if="*{book.getRating()&lt;1.2 and not(book.getRating()&lt;0.8)}"
+                               checked="checked" type="radio" id="star1" th:name="stars" value="1"/>
+                        <input th:unless="*{book.getRating()&lt;1.2 and not(book.getRating()&lt;0.8)}"
+                               type="radio" id="star1" th:name="stars" value="1"/>
+                        <label class="full" for="star1" title="Sucks big time - 1 star"></label>
+                        <input th:if="*{book.getRating()&lt;0.8 and book.getRating()&gt;0}"
+                               checked="checked" type="radio" id="starhalf" th:name="stars"
+                               value="0.5"/>
+                        <input th:unless="*{book.getRating()&lt;0.8 and book.getRating()&gt;0}"
+                               type="radio" id="starhalf" th:name="stars" value="0.5"/>
+                        <label class="half" for="starhalf" title="It Sucks - 0.5 stars"></label>
+                        <input th:if="*{book.getRating() == 0}"
+                               checked="checked" hidden="hidden" type="radio" id="zero"
                                th:name="stars"
                                value="0"/>
                     </fieldset>
+                    <p style="font-size: medium; padding-top: 7px; padding-left: 5px; ">
+                    <span style="padding-left: 5px;" th:if="*{book.getRating() &gt; 0}">
+                    <span th:text="${#numbers.formatDecimal(book.getRating(), 0, 'COMMA', 1, 'POINT' )}"></span>
+                    </span>
+                        <span style="padding-left: 5px;" th:if="*{book.getRating() == 0}">
+                    <span th:text="0"></span>
+                    </span>
+                    </p>
                 </div>
-                <div class="col-xs-2" style="padding-top:8px;">
-                    <span>
-                    <span id="numOfRatings">0 </span>Reviews</span>
+                <div class="col-xs-2" style="font-size: medium; padding-top: 7px; ">
+
+                    <span style="padding-left:0; padding-right: 0;">(
+                    <span id="numOfRatings"
+                          th:text="${#lists.size(reviewList) == 1}?${#lists.size(reviewList)}+' Review' : ${#lists.size(reviewList)} + ' Reviews'"></span> )</span>
+
                 </div>
+
                 <spam id="RateCommentArea" th:if="${user} and ${bookOwned}">
                     <div class="col-xs-7 text-left"
                          style="padding-left:0; padding-top:8px;">
