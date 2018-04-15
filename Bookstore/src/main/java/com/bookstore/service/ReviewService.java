@@ -18,4 +18,7 @@ public interface ReviewService {
   Review save(Review review);
 
   List<Review> findByBook(Book book);
+
+  Review findByBookAndUser(Book book, User user);
+
 }

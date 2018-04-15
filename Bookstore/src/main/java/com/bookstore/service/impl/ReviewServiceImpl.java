@@ -46,4 +46,9 @@ public class ReviewServiceImpl implements ReviewService {
   public List<Review> findByBook(Book book) {
     return reviewRepository.findByBook(book);
   }
+
+  @Override
+  public Review findByBookAndUser(Book book, User user) {
+    return reviewRepository.findByBookAndUser(book, user);
+  }
 }

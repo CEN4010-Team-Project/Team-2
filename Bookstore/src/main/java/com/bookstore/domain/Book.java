@@ -34,18 +34,9 @@ public class Book {
   @Transient
   private MultipartFile bookImage;
 
-
   @OneToMany(mappedBy = "book")
   @JsonIgnore
   private List<BookToCartItem> bookToCartItemList;
-
-  public List<Review> getReviewList() {
-    return reviewList;
-  }
-
-  public void setReviewList(List<Review> reviewList) {
-    this.reviewList = reviewList;
-  }
 
   @OneToMany(mappedBy = "book")
   private List<Review> reviewList;
@@ -197,6 +188,15 @@ public class Book {
   public List<BookToCartItem> getBookToCartItemList() {
     return bookToCartItemList;
   }
+
+  public List<Review> getReviewList() {
+    return reviewList;
+  }
+
+  public void setReviewList(List<Review> reviewList) {
+    this.reviewList = reviewList;
+  }
+
 
   public void setBookToCartItemList(List<BookToCartItem> bookToCartItemList) {
     this.bookToCartItemList = bookToCartItemList;

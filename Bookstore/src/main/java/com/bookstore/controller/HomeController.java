@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -59,6 +60,9 @@ public class HomeController {
 
   @Autowired
   private OrderService orderService;
+
+  @Autowired
+  private ReviewService reviewService;
 
   @RequestMapping("/")
   public String index() {
@@ -101,6 +105,7 @@ public class HomeController {
       @PathParam("id") Long id, Model model, Principal principal
   ) {
 
+
     if(principal != null) {
 
       AtomicBoolean bookOwned = new AtomicBoolean(false);
@@ -133,6 +138,10 @@ public class HomeController {
 
     model.addAttribute("qtyList", qtyList);
     model.addAttribute("qty", 1);
+
+    List<Review> reviewList = reviewService.findByBook(book);
+    model.addAttribute("reviewList", reviewList);
+
 
     return "bookDetail";
   }
@@ -663,6 +672,69 @@ public class HomeController {
 
       return "myProfile";
     }
+  }
+
+  @RequestMapping("/setReview")
+  public String setReview(
+      @ModelAttribute("comment") String comment,
+      @ModelAttribute("review_date") Date reviewDate,
+      @ModelAttribute("stars") String stars,
+      @ModelAttribute("anonymous") boolean anonymous,
+      @ModelAttribute("book_id") String book_id,
+      Principal principal
+  ) {
+
+    Book book = bookService.findOne(Long.parseLong(book_id));
+    AtomicBoolean bookHadReview = new AtomicBoolean(false);
+    AtomicBoolean userHadReview = new AtomicBoolean(false);
+    User user = userService.findByUsername(principal.getName());
+    book = bookService.findOne(book.getId());
+
+    Review review = new Review();
+
+    List<Review> reviewList = book.getReviewList();
+    if(reviewList.retainAll(user.getReviewList())) {
+      review = reviewService.findByBookAndUser(book, user);
+      review.setBook(book);
+      review.setUser(user);
+      review.setStars(Double.parseDouble(stars));
+      review.setAnonymous(anonymous);
+      review.setComment(comment);
+      review.setReviewDate(java.sql.Date.valueOf(LocalDate.now()));
+      reviewService.updateReview(review);
+    } else {
+      review.setBook(book);
+      review.setUser(user);
+      review.setStars(Double.parseDouble(stars));
+      review.setAnonymous(anonymous);
+      review.setComment(comment);
+      review.setReviewDate(java.sql.Date.valueOf(LocalDate.now()));
+      reviewService.save(review);
+    }
+
+    reviewList.forEach(r -> {
+      if(r.getUser().getId() == user.getId()) {
+        bookHadReview.set(true);
+      }
+    });
+
+    List<Review> reviewListUser = user.getReviewList();
+    Book finalBook = book;
+    reviewListUser.forEach(r -> {
+      if(r.getBook().getId() == finalBook.getId()) {
+        userHadReview.set(true);
+      }
+    });
+
+    if(!(bookHadReview.get() && userHadReview.get())) {
+      reviewService.save(review);
+    } else {
+
+      reviewService.updateReview(review);
+    }
+
+
+    return "forward:/bookDetail?id=" + book.getId();
   }
 
 
