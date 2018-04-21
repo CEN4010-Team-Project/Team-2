@@ -2,6 +2,7 @@ package com.bookstore.service.impl;
 
 import com.bookstore.domain.*;
 import com.bookstore.repository.OrderRepository;
+import com.bookstore.service.BookService;
 import com.bookstore.service.CartItemService;
 import com.bookstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class OrderServiceImpl implements OrderService {
 
   @Autowired
   private OrderRepository orderRepository;
+  @Autowired
+  private BookService bookService;
 
   @Autowired
   private CartItemService cartItemService;
@@ -39,6 +42,7 @@ public class OrderServiceImpl implements OrderService {
       cartItem.setOrder(order);
       book.setInStockNumber(book.getInStockNumber() - cartItem.getQty());
       book.setSoldNumber(book.getSoldNumber() + cartItem.getQty());
+//      bookService.updateBook(book);
     }
 
     order.setCartItemList(cartItemList);

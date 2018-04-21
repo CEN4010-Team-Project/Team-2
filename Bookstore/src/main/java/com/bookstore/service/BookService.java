@@ -20,4 +20,6 @@ public interface BookService {
   List<Book> sortByTitle(List<Book> existent);
 
   List<Book> blurrySearch(String title);
+
+  void updateBook(Book book);
 }

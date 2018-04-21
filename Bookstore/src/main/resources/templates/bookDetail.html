@@ -325,55 +325,47 @@
                                         <input th:unless="*{review.getStars() == 4 }"
                                                type="radio"
                                                id="ratedstar4"/>
-                                        <label class="full" for="star4"
-                                               title="Pretty good - 4 stars"></label>
+                                        <label class="full" for="ratedstar4"></label>
                                         <input th:if="*{review.getStars() == 3.5 }"
                                                checked="checked" type="radio"
                                                id="ratedstar3half"/>
                                         <input th:unless="*{review.getStars() == 3.5 }"
                                                type="radio"
                                                id="ratedstar3half"/>
-                                        <label class="half" for="ratedstar3half"
-                                               title="Meh - 3.5 stars"></label>
+                                        <label class="half" for="ratedstar3half"></label>
                                         <input th:if="*{review.getStars() == 3 }" checked="checked"
                                                type="radio" id="ratedstar3"/>
                                         <input th:unless="*{review.getStars() == 3 }"
                                                type="radio" id="ratedstar3"/>
-                                        <label class="full" for="star3"
-                                               title="Meh - 3 stars"></label>
+                                        <label class="full" for="ratedstar3"></label>
                                         <input th:if="*{review.getStars() == 2.5 }"
                                                checked="checked"
                                                type="radio" id="ratedstar2half"/>
                                         <input th:unless="*{review.getStars() == 2.5 }"
                                                type="radio" id="ratedstar2half"/>
                                         <label class="half"
-                                               for="ratedstar2half"
-                                               title="Kinda bad - 2.5 stars"></label>
+                                               for="ratedstar2half"></label>
                                         <input th:if="*{review.getStars() == 2 }" checked="checked"
                                                type="radio" id="ratedstar2"/>
                                         <input th:unless="*{review.getStars() == 2 }"
                                                type="radio" id="ratedstar2"/>
-                                        <label class="full" for="star2"
-                                               title="Kinda bad - 2 stars"></label>
+                                        <label class="full" for="ratedstar2"></label>
                                         <input th:if="*{review.getStars() == 1.5 }"
                                                checked="checked"
                                                type="radio" id="ratedstar1half" name="rating"/>
                                         <input th:unless="*{review.getStars() == 1.5 }"
                                                type="radio" id="ratedstar1half" name="rating"/>
-                                        <label class="half" for="ratedstar1half"
-                                               title="Meh - 1.5 stars"></label>
+                                        <label class="half" for="ratedstar1half"></label>
                                         <input th:if="*{review.getStars() == 1 }" checked="checked"
                                                type="radio" id="ratedstar1"/>
                                         <input th:unless="*{review.getStars() == 1 }"
                                                type="radio" id="ratedstar1"/>
-                                        <label class="full" for="ratedstar1"
-                                               title="Sucks big time - 1 star"></label>
+                                        <label class="full" for="ratedstar1"></label>
                                         <input th:if="*{review.getStars() == 0.5 }"
                                                checked="checked" type="radio" id="ratedstarhalf"/>
                                         <input th:if="*{review.getStars() == 0.5 }"
                                                type="radio" id="ratedstarhalf"/>
-                                        <label class="half" for="ratedstarhalf"
-                                               title="Sucks big time - 0.5 stars"></label>
+                                        <label class="half" for="ratedstarhalf"></label>
                                     </fieldset>
                                 </div>
                                 <div class="col-xs-9">

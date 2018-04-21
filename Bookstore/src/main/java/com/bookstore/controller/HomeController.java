@@ -30,6 +30,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -94,6 +95,9 @@ public class HomeController {
     }
 
     List<Book> bookList = bookService.findAll();
+    List<Long> bookIds = bookList.parallelStream().map(Book::getId).collect(Collectors.toList());
+
+    model.addAttribute("bookIds", bookIds);
     model.addAttribute("bookList", bookList);
     model.addAttribute("activeAll", true);
 
@@ -688,10 +692,7 @@ public class HomeController {
   ) {
 
     Book book = bookService.findOne(Long.parseLong(book_id));
-    AtomicBoolean bookHadReview = new AtomicBoolean(false);
-    AtomicBoolean userHadReview = new AtomicBoolean(false);
     User user = userService.findByUsername(principal.getName());
-    book = bookService.findOne(book.getId());
 
     Review review = new Review();
 
@@ -699,7 +700,8 @@ public class HomeController {
     List<Review> reviewListByUser = user.getReviewList();
     List<Review> reviewList = reviewListByBook;
     reviewList.retainAll(reviewListByUser);
-    if(!reviewList.isEmpty()) {
+
+    if(reviewList.size() > 0) {
       review = reviewList.get(0);
       review.setBook(book);
       review.setUser(user);
@@ -718,17 +720,16 @@ public class HomeController {
       reviewService.save(review);
     }
 
-
-    reviewList.forEach(r -> {
-      if(r.getUser().getId() == user.getId()) {
-        bookHadReview.set(true);
-      }
-    });
-
-    double ratingsAvg =
-        reviewListByBook.stream().mapToDouble(Review::getStars).sum() / reviewList.size();
+    double ratingsAvg;
+    if(reviewListByBook.size() > 0) {
+      ratingsAvg =
+          reviewListByBook.stream().mapToDouble(Review::getStars).sum() / reviewList.size();
+    } else {
+      ratingsAvg = review.getStars();
+    }
 
     book.setRating(ratingsAvg);
+    bookService.updateBook(book);
 
     return "forward:/bookDetail?id=" + book.getId();
   }

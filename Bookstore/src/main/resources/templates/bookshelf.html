@@ -24,10 +24,16 @@
 
     <div class="row" style="margin-top: 60px;">
         <div class="col-xs-3">
-            <h3><label for="category">Category</label></h3>
-            <div class="list-group" id="category">
+
+            <div class="list-group" id="showAll">
                 <a th:href="@{/bookshelf(category='all')}" th:classappend="${activeAll}? 'active'"
                    class="list-group-item">All</a>
+                <a th:href="@{/searchTopSellers}"
+                   class="list-group-item">Top Sellers</a>
+
+            </div>
+            <h3><label for="category">Category</label></h3>
+            <div class="list-group" id="category">
                 <a th:href="@{/searchByCategory(category='Management')}"
                    th:classappend="${activeManagement}? 'active'"
                    class="list-group-item">Management</a>
@@ -41,6 +47,46 @@
                    th:classappend="${activeArtsLiterature}? 'active'" class="list-group-item">Arts
                     &amp; Literature</a>
             </div>
+            <h3><label for="Ratings">Ratings</label></h3>
+            <div class="list-group" id="Ratings">
+                <a th:href="@{/searchByRatings(baseLine=5)}"
+                   th:classappend="${active5Stars}? 'active'"
+                   class="list-group-item">5 Stars</a>
+                <a th:href="@{/searchByRatings(baseLine=4)}"
+                   th:classappend="${active4Stars}? 'active'"
+                   class="list-group-item">4 Stars &amp; Up</a>
+                <a th:href="@{/searchByRatings(baseLine=3)}"
+                   th:classappend="${active3Stars}? 'active'"
+                   class="list-group-item">3 Stars &amp;
+                    Up</a>
+            </div>
+            <h3><label for="SortBy">Sort By</label></h3>
+            <div class="list-group" id="SortBy">
+                <a th:href="@{/sort(bookListed = ${bookIds}, sort = 'Title')}"
+                   th:classappend="${activeTitle}? 'active'"
+                   class="list-group-item">Book Title</a>
+                <a th:href="@{/sort(bookListed = ${bookIds}, sort = 'Date')}"
+                   th:classappend="${activeDate}? 'active'"
+                   class="list-group-item">Newest</a>
+                <a th:href="@{/sort(bookListed = ${bookIds}, sort = 'Ratings')}"
+                   th:classappend="${activeRatings}? 'active'"
+                   class="list-group-item">Highest Rated</a>
+                <a th:href="@{/sort(bookListed = ${bookIds}, sort = 'LowestPrice')}"
+                   th:classappend="${activeLowestPrice}? 'active'"
+                   class="list-group-item">Lowest Price</a>
+                <a th:href="@{/sort(bookListed = ${bookIds}, sort = 'HighestPrice')}"
+                   th:classappend="${activeHighestPrice}? 'active'"
+                   class="list-group-item">Highest Price</a>
+                <a th:href="@{/sort(bookListed = ${bookIds}, sort = 'Sales')}"
+                   th:classappend="${activeSales}? 'active'"
+                   class="list-group-item">Highest Sales</a>
+                <a th:href="@{/sort(bookListed = ${bookIds}, sort = 'Deals')}"
+                   th:classappend="${activeDeals}? 'active'"
+                   class="list-group-item">Best Deal</a>
+                <a th:href="@{/sort(bookListed = ${bookIds}, sort = 'Author')}"
+                   th:classappend="${activeAuthor}? 'active'"
+                   class="list-group-item">Author Name</a>
+            </div>
         </div>
 
         <div class="col-xs-9">
@@ -48,17 +94,16 @@
                 <h4 style="font-style: italic;">Oops, no result was found. Try
                     something else or try again later.</h4>
             </div>
-
             <table border="0" id="bookList">
                 <thead>
                 <tr>
                     <th>
-                        <span class="col-xs-offset-10">Sort by Alphabetical Order</span>
+
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="book-item" data-th-each="book : ${bookList}">
+                <tr class="book-item" th:each="book : ${bookList}">
                     <td>
                         <div th:if="${book != null}">
                             <div class="row" style="margin-bottom: 50px;">
@@ -72,11 +117,12 @@
                                     <a th:href="@{/bookDetail?id=}+${book.id}"><h4
                                             th:text="${book.title}"></h4></a> <span
                                         th:text="${book.publicationDate}"></span>
-                                    <p th:text="${book.author}"></p>
-                                    <a th:href="@{/bookDetail?id=}+${book.id}"><span
-                                            th:text="${#strings.capitalize(book.format)}"></span></a>
+                                    <a th:href="@{/bookDetail?id=}+${book.id}">
+                                        <p th:text="${book.author}"></p></a>
                                     <span
-                                            th:text="${book.numberOfPages}"><span> pages</span></span><br/>
+                                            th:text="${#strings.capitalize(book.format)}"></span>
+                                    <span
+                                            th:text="${book.numberOfPages}"></span><span> pages</span><br/>
 
                                     <a th:href="@{/bookDetail?id=}+${book.id}"><span
                                             style="font-size: x-large; color: #db3208;">$<span

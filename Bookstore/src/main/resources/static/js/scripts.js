@@ -42,7 +42,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('#bookList').DataTable({
         "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
-        "ordering": true,
+        "ordering": false,
         stateSave: true
     });
 

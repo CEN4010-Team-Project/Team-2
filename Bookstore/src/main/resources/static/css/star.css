@@ -70,7 +70,3 @@
 .rating > input:checked ~ label:hover ~ label {
     color: #FFED85;
 }
-
-.chosen {
-
-}

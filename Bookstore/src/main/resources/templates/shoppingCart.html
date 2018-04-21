@@ -72,7 +72,9 @@
 
                             <p th:if="${cartItem.book.inStockNumber&gt;0}"
                                style="color: green;">
-                                Only <span th:text="${cartItem.book.inStockNumber}"></span> In
+                                Only <span
+                                    th:text="${cartItem.book.inStockNumber}"></span>
+                                In
                                 Stock
                             </p>
                             <p th:if="${cartItem.book.inStockNumber==0}"
@@ -83,7 +85,7 @@
 
                     <div class="col-xs-2">
                         <h5 style="color: #db3208; font-size: large;">
-                            $<span th:text="${cartItem.book.ourPrice}"
+                            $<span th:text="${cartItem.book.ourPrice * cartItem.qty}"
                                    th:style="${cartItem.book.inStockNumber}==0? 'text-decoration: line-through' : ''"></span>
                         </h5>
                     </div>
