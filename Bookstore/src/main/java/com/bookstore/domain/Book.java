@@ -1,171 +1,184 @@
 package com.bookstore.domain;
 
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Book {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
-	private String title;
-	private String author;
-	private String publisher;
-	private String publicationDate;
-	private String language;
-	private String category;
-	private int numberOfPages;
-	private String format;
-	private String isbn;
-	private double shippingWeight;
-	private double listPrice;
-	private double ourPrice;
-	private boolean active=true;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  private String title;
+  private String author;
+  private String publisher;
+  private String publicationDate;
+  private String language;
+  private String category;
+  private int numberOfPages;
+  private String format;
+  private String isbn;
+  private double rating;
 
-	@Column(columnDefinition="text")
-	private String description;
-	private int inStockNumber;
-	private String authorBio;
+  private double shippingWeight;
+  private double listPrice;
+  private double ourPrice;
+  private boolean active = true;
 
-	@Transient
-	private MultipartFile bookImage;
+  @Column(columnDefinition = "text")
+  private String description;
+  private int inStockNumber;
+  private int soldNumber;
+  private String authorBio;
 
+  @Transient
+  private MultipartFile bookImage;
 
-	@OneToMany(mappedBy = "book")
-	@JsonIgnore
-	private List<BookToCartItem> bookToCartItemList;
+  @OneToMany(mappedBy = "book")
+  @JsonIgnore
+  private List<BookToCartItem> bookToCartItemList;
 
-	public Long getId() {
-		return id;
-	}
+  @OneToMany(mappedBy = "book")
+  private List<Review> reviewList;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public String getTitle() {
-		return title;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+  public String getTitle() {
+    return title;
+  }
 
-	public String getAuthor() {
-		return author;
-	}
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-	public void setAuthor(String author) {
-		this.author = author;
-	}
+  public String getAuthor() {
+    return author;
+  }
 
-	public String getPublisher() {
-		return publisher;
-	}
+  public double getRating() {
+    return rating;
+  }
 
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
-	}
+  public void setRating(double rating) {
+    this.rating = rating;
+  }
 
-	public String getPublicationDate() {
-		return publicationDate;
-	}
+  public int getSoldNumber() {
+    return soldNumber;
+  }
 
-	public void setPublicationDate(String publicationDate) {
-		this.publicationDate = publicationDate;
-	}
+  public void setSoldNumber(int soldNumber) {
+    this.soldNumber = soldNumber;
+  }
 
-	public String getLanguage() {
-		return language;
-	}
+  public void setAuthor(String author) {
+    this.author = author;
+  }
 
-	public void setLanguage(String language) {
-		this.language = language;
-	}
+  public String getPublisher() {
+    return publisher;
+  }
 
-	public String getCategory() {
-		return category;
-	}
+  public void setPublisher(String publisher) {
+    this.publisher = publisher;
+  }
 
-	public void setCategory(String category) {
-		this.category = category;
-	}
+  public String getPublicationDate() {
+    return publicationDate;
+  }
 
-	public int getNumberOfPages() {
-		return numberOfPages;
-	}
+  public void setPublicationDate(String publicationDate) {
+    this.publicationDate = publicationDate;
+  }
 
-	public void setNumberOfPages(int numberOfPages) {
-		this.numberOfPages = numberOfPages;
-	}
+  public String getLanguage() {
+    return language;
+  }
 
-	public String getFormat() {
-		return format;
-	}
+  public void setLanguage(String language) {
+    this.language = language;
+  }
 
-	public void setFormat(String format) {
-		this.format = format;
-	}
+  public String getCategory() {
+    return category;
+  }
 
-	public String getIsbn() {
-		return isbn;
-	}
+  public void setCategory(String category) {
+    this.category = category;
+  }
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
+  public int getNumberOfPages() {
+    return numberOfPages;
+  }
 
-	public double getShippingWeight() {
-		return shippingWeight;
-	}
+  public void setNumberOfPages(int numberOfPages) {
+    this.numberOfPages = numberOfPages;
+  }
 
-	public void setShippingWeight(double shippingWeight) {
-		this.shippingWeight = shippingWeight;
-	}
+  public String getFormat() {
+    return format;
+  }
 
-	public double getListPrice() {
-		return listPrice;
-	}
+  public void setFormat(String format) {
+    this.format = format;
+  }
 
-	public void setListPrice(double listPrice) {
-		this.listPrice = listPrice;
-	}
+  public String getIsbn() {
+    return isbn;
+  }
 
-	public double getOurPrice() {
-		return ourPrice;
-	}
+  public void setIsbn(String isbn) {
+    this.isbn = isbn;
+  }
 
-	public void setOurPrice(double ourPrice) {
-		this.ourPrice = ourPrice;
-	}
+  public double getShippingWeight() {
+    return shippingWeight;
+  }
 
-	public boolean isActive() {
-		return active;
-	}
+  public void setShippingWeight(double shippingWeight) {
+    this.shippingWeight = shippingWeight;
+  }
 
-	public void setActive(boolean active) {
-		this.active = active;
-	}
+  public double getListPrice() {
+    return listPrice;
+  }
 
-	public String getDescription() {
-		return description;
-	}
+  public void setListPrice(double listPrice) {
+    this.listPrice = listPrice;
+  }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+  public double getOurPrice() {
+    return ourPrice;
+  }
+
+  public void setOurPrice(double ourPrice) {
+    this.ourPrice = ourPrice;
+  }
+
+  public boolean isActive() {
+    return active;
+  }
+
+  public void setActive(boolean active) {
+    this.active = active;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
   public String getAuthorBio() {
     return authorBio;
@@ -175,28 +188,37 @@ public class Book {
     this.authorBio = authorBio;
   }
 
-	public int getInStockNumber() {
-		return inStockNumber;
-	}
+  public int getInStockNumber() {
+    return inStockNumber;
+  }
 
-	public void setInStockNumber(int inStockNumber) {
-		this.inStockNumber = inStockNumber;
-	}
+  public void setInStockNumber(int inStockNumber) {
+    this.inStockNumber = inStockNumber;
+  }
 
-	public MultipartFile getBookImage() {
-		return bookImage;
-	}
+  public MultipartFile getBookImage() {
+    return bookImage;
+  }
 
-	public void setBookImage(MultipartFile bookImage) {
-		this.bookImage = bookImage;
-	}
+  public void setBookImage(MultipartFile bookImage) {
+    this.bookImage = bookImage;
+  }
 
-	public List<BookToCartItem> getBookToCartItemList() {
-		return bookToCartItemList;
-	}
+  public List<BookToCartItem> getBookToCartItemList() {
+    return bookToCartItemList;
+  }
 
-	public void setBookToCartItemList(List<BookToCartItem> bookToCartItemList) {
-		this.bookToCartItemList = bookToCartItemList;
-	}
+  public List<Review> getReviewList() {
+    return reviewList;
+  }
+
+  public void setReviewList(List<Review> reviewList) {
+    this.reviewList = reviewList;
+  }
+
+
+  public void setBookToCartItemList(List<BookToCartItem> bookToCartItemList) {
+    this.bookToCartItemList = bookToCartItemList;
+  }
 
 }

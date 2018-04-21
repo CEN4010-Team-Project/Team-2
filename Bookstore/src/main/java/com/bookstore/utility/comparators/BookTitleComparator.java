@@ -1,4 +1,4 @@
-package com.bookstore.utility;
+package com.bookstore.utility.comparators;
 
 import com.bookstore.domain.Book;
 

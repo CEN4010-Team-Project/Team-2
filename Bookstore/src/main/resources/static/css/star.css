@@ -27,8 +27,35 @@
     float: right;
 }
 
-/***** CSS Magic to Highlight Stars on Hover *****/
+.rated {
+    border: none;
+    float: left;
+}
 
+.rated > input {
+    display: none;
+}
+
+.rated > label:before {
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.rated > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.rated > label {
+    color: #ddd;
+    float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+.rated > input:checked ~ label,
 .rating > input:checked ~ label, /* show gold star when clicked */
 .rating:not(:checked) > label:hover, /* hover current star */
 .rating:not(:checked) > label:hover ~ label {
@@ -42,8 +69,4 @@
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
 .rating > input:checked ~ label:hover ~ label {
     color: #FFED85;
-}
-
-.chosen {
-
 }

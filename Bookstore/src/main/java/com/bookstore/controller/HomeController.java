@@ -27,7 +27,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -59,6 +62,9 @@ public class HomeController {
   @Autowired
   private OrderService orderService;
 
+  @Autowired
+  private ReviewService reviewService;
+
   @RequestMapping("/")
   public String index() {
     return "index";
@@ -89,6 +95,9 @@ public class HomeController {
     }
 
     List<Book> bookList = bookService.findAll();
+    List<Long> bookIds = bookList.parallelStream().map(Book::getId).collect(Collectors.toList());
+
+    model.addAttribute("bookIds", bookIds);
     model.addAttribute("bookList", bookList);
     model.addAttribute("activeAll", true);
 
@@ -100,7 +109,10 @@ public class HomeController {
       @PathParam("id") Long id, Model model, Principal principal
   ) {
 
+
     if(principal != null) {
+
+      AtomicBoolean bookOwned = new AtomicBoolean(false);
       String username = principal.getName();
       User user = userService.findByUsername(username);
 
@@ -108,6 +120,13 @@ public class HomeController {
 
       model.addAttribute("cartItemList", cartItemList);
       model.addAttribute("user", user);
+
+      user.getOrderList().forEach(order -> order.getCartItemList().forEach(cartItem -> {
+        if(cartItem.getBook().getId() == id) {
+          bookOwned.set(true);
+        }
+      }));
+      model.addAttribute("bookOwned", bookOwned.get());
     }
 
     Book book = bookService.findOne(id);
@@ -116,10 +135,20 @@ public class HomeController {
     List<Book> bookList = bookService.findAll();
     model.addAttribute("bookList", bookList);
 
+    List<Book> bookListByAuthor = bookService.findByAuthor(book.getAuthor());
+    model.addAttribute("bookListByAuthor", bookListByAuthor);
+
     List<Integer> qtyList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
     model.addAttribute("qtyList", qtyList);
     model.addAttribute("qty", 1);
+
+    List<Review> reviewList = reviewService.findByBook(book);
+    model.addAttribute("reviewList", reviewList);
+
+    double ratingsAvg = reviewList.stream().mapToDouble(Review::getStars).sum() / reviewList.size();
+
+    book.setRating(ratingsAvg);
 
     return "bookDetail";
   }
@@ -650,6 +679,59 @@ public class HomeController {
 
       return "myProfile";
     }
+  }
+
+  @RequestMapping("/setReview")
+  public String setReview(
+      @ModelAttribute("comment") String comment,
+      @ModelAttribute("review_date") Date reviewDate,
+      @ModelAttribute("stars") String stars,
+      @ModelAttribute("anonymous") boolean anonymous,
+      @ModelAttribute("book_id") String book_id,
+      Principal principal
+  ) {
+
+    Book book = bookService.findOne(Long.parseLong(book_id));
+    User user = userService.findByUsername(principal.getName());
+
+    Review review = new Review();
+
+    List<Review> reviewListByBook = book.getReviewList();
+    List<Review> reviewListByUser = user.getReviewList();
+    List<Review> reviewList = reviewListByBook;
+    reviewList.retainAll(reviewListByUser);
+
+    if(reviewList.size() > 0) {
+      review = reviewList.get(0);
+      review.setBook(book);
+      review.setUser(user);
+      review.setStars(Double.parseDouble(stars));
+      review.setAnonymous(anonymous);
+      review.setComment(comment);
+      review.setReviewDate(java.sql.Date.valueOf(LocalDate.now()));
+      reviewService.updateReview(review);
+    } else {
+      review.setBook(book);
+      review.setUser(user);
+      review.setStars(Double.parseDouble(stars));
+      review.setAnonymous(anonymous);
+      review.setComment(comment);
+      review.setReviewDate(java.sql.Date.valueOf(LocalDate.now()));
+      reviewService.save(review);
+    }
+
+    double ratingsAvg;
+    if(reviewListByBook.size() > 0) {
+      ratingsAvg =
+          reviewListByBook.stream().mapToDouble(Review::getStars).sum() / reviewList.size();
+    } else {
+      ratingsAvg = review.getStars();
+    }
+
+    book.setRating(ratingsAvg);
+    bookService.updateBook(book);
+
+    return "forward:/bookDetail?id=" + book.getId();
   }
 
 
